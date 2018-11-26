@@ -66,6 +66,7 @@ $entires['jwt'] = function (\Slim\Container $container) {
     $config = [
         'header-param' => getenv('JWT_HEADER_PARAMS'),
         'issuer' => getenv('JWT_ISSUER'),
+        'expiry' => getenv('JWT_EXPIRY') ?: 86400,
         'audience' => getenv('JWT_AUDIENCE'),
         'id' => getenv('JWT_ID'),
         'sign' => getenv('JWT_SIGN'),
@@ -91,10 +92,10 @@ $entires['db'] = function () {
     $connection = new Illuminate\Database\Capsule\Manager();
     $connection->addConnection([
         'driver' => 'mysql',
-        'host' => getenv('DB_HOST') ?: '10.0.1.6',
-        'database' => getenv('DB_NAME') ?: 'field_ops',
-        'username' => getenv('DB_USER') ?: 'fieldops_user',
-        'password' => getenv('DB_PASSWORD') ?: 'h3Kc%Mg@53',
+        'host' => getenv('DB_HOST') ?: 'localhost',
+        'database' => getenv('DB_NAME') ?: '',
+        'username' => getenv('DB_USER') ?: '',
+        'password' => getenv('DB_PASSWORD') ?: '',
         'charset' => 'utf8',
         'collation' => 'utf8_unicode_ci',
         'prefix' => '',
@@ -118,64 +119,8 @@ $entires['mailer'] = function () {
     ]);
 };
 
-$entires['imageUpload'] = function () {
-    return new \App\Acme\Helpers\ImageUpload();
-};
-
-$entires['groomUserRepository'] = function () {
-    return new App\Repositories\GroomUsers\GroomUserEloquentRepository(new \App\Models\GroomUser());
-};
-
-$entires['savingsCollectionRepository'] = function () {
-    return new App\Repositories\SavingsCollections\SavingsCollectionEloquentRepository(new \App\Models\SavingsCollection());
-};
-
-$entires['savingsClientRepository'] = function () {
-    return new App\Repositories\SavingsClients\SavingsClientEloquentRepository(new \App\Models\SavingsClient());
-};
-
-// $entires['groomUserRepository'] = function () {
-//     return new App\Repositories\LoanRepayments\LoanRepaymentEloquentRepository(new \App\Models\LoanRepayment());
-// };
-
-$entires['weeklyCollectionRepository'] = function () {
-    return new App\Repositories\WeeklyCollections\WeeklyCollectionEloquentRepository(new \App\Models\WeeklyCollection());
-};
-
-$entires['chargableRepository'] = function () {
-    return new App\Repositories\Chargables\ChargableEloquentRepository(new \App\Models\Chargable());
-};
-
-$entires['messageRepository'] = function () {
-    return new App\Repositories\Messages\MessageEloquentRepository(new \App\Models\Message());
-};
-
-$entires['unionPurseDepWithRepository'] = function () {
-    return new App\Repositories\UnionPurseDepWiths\UnionPurseDepWithEloquentRepository(new \App\Models\UnionPurseDepWith());
-};
-
-$entires['savingsDepositRepository'] = function () {
-    return new App\Repositories\SavingsDeposits\SavingsDepositEloquentRepository(new \App\Models\SavingsDeposit());
-};
-
 $entires['userRepository'] = function () {
     return new App\Repositories\Users\UserEloquentRepository(new \App\Models\User());
-};
-
-$entires['clientRepository'] = function () {
-    return new App\Repositories\Clients\ClientEloquentRepository(new \App\Models\Client());
-};
-
-$entires['unionRepository'] = function () {
-    return new App\Repositories\Unions\UnionEloquentRepository(new \App\Models\Union());
-};
-
-$entires['loanRepository'] = function () {
-    return new App\Repositories\Loans\LoanEloquentRepository(new \App\Models\Loan());
-};
-
-$entires['loanDisbursementRepository'] = function () {
-    return new App\Repositories\LoanDisbursements\LoanDisbursementEloquentRepository(new \App\Models\LoanDisbursement());
 };
 
 

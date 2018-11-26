@@ -21,6 +21,10 @@ class JWT
      */
     private $token;
     /**
+     * @var int
+     */
+    private $expiry;
+    /**
      * @var Sha256
      */
     private $sha256;
@@ -58,6 +62,7 @@ class JWT
         $this->parser = $parser;
         $this->builder = $builder;
         $this->token = $request->getHeaderLine($this->config['header-param']);
+        $this->expiry = $this->config['expiry'];
         $this->validator = $validator;
     }
 
@@ -75,7 +80,7 @@ class JWT
             ->setId($this->config['id'], true)
             ->setIssuedAt(time())
             ->setNotBefore(time())
-            ->setExpiration(time() + 3600);
+            ->setExpiration(time() + (int)$this->expiry);
         foreach ($data as $key => $value) {
             $token->set($key, $value);
         }
